@@ -8,14 +8,14 @@ type UserCredential struct {
 //Data model
 type VideoInfo struct {
 	Id           string
-	AuthorId       int
+	AuthorId     int
 	Name         string
 	DisplayCtime string
 }
 
 type Comment struct {
-	Id string
+	Id      string
 	VideoId string
-	Author string
+	Author  string
 	Content string
 }

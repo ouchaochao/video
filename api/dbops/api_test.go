@@ -10,7 +10,7 @@ import (
 var tempvid string
 
 func clearTables() {
-	// What?
+	// 初始化, 保证数据库每次都是新的
 	dbConn.Exec("truncate users")
 	dbConn.Exec("truncate video_info")
 	dbConn.Exec("truncate comments")
@@ -119,6 +119,7 @@ func testAddComments(t *testing.T) {
 func testListComments(t *testing.T) {
 	vid := "12345"
 	from := 1514764800
+	// 把当前时间转化成, 单位: 纳秒
 	to, _ := strconv.Atoi(strconv.FormatInt(time.Now().UnixNano()/1000000000, 10))
 	res, err := ListComments(vid, from, to)
 	if err != nil {
