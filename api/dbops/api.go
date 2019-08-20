@@ -71,7 +71,7 @@ func AddVideoInfo(aid int, name string) (*defs.VideoInfo, error) {
 	if err != nil {
 		return nil, err
 	}
-	//插入name有问题
+
 	_, err = stmtIns.Exec(vid, aid, name, ctime)
 	if err != nil {
 		return nil, err
