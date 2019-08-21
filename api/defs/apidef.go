@@ -1,8 +1,15 @@
 package defs
 
+//requests
 type UserCredential struct {
 	Username string `json:"username"`
 	Pwd      string `json:"pwd"`
+}
+
+//response
+type SignedUp struct {
+	Success   bool   `json:"success"`
+	SessionId string `json:"session_id"`
 }
 
 //Data model
@@ -18,4 +25,9 @@ type Comment struct {
 	VideoId string
 	Author  string
 	Content string
+}
+
+type SimpleSession struct {
+	Username string // login name
+	TTL      int64
 }

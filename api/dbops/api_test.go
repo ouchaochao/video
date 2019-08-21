@@ -23,6 +23,9 @@ func TestMain(m *testing.M) {
 	clearTables()
 }
 
+/*
+测试有关用户的函数
+*/
 func TestUserWorkFlow(t *testing.T) {
 	t.Run("Add", testAddUser)
 	t.Run("Get", testGetUser)
@@ -61,6 +64,9 @@ func testRegetUser(t *testing.T) {
 	}
 }
 
+/*
+测试有关视频的函数，值得注意的是，添加视频前必须要有用户存在
+*/
 func TestVideoWorkFlow(t *testing.T) {
 	clearTables()
 	t.Run("PrepareUser", testAddUser)
@@ -98,6 +104,9 @@ func testRegetVideoInfo(t *testing.T) {
 	}
 }
 
+/*
+测试有关评论的函数
+*/
 func TestComments(t *testing.T) {
 	clearTables()
 	t.Run("AddUser", testAddUser)

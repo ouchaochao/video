@@ -1,21 +1,39 @@
 package handlers
 
 import (
+	"encoding/json"
 	"github.com/julienschmidt/httprouter"
 	"io"
+	"io/ioutil"
 	"net/http"
+	"video/api/dbops"
+	"video/api/defs"
+	"video/api/session"
 )
 
 func CreateUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	//dbops.AddUserCredential("aaa", "bbb")
-	//pwd, _ := dbops.GetUserCredential("aaa")
-	//dbops.DeleteUser("aaa","bbb")
-	//res, _ :=dbops.AddNewVideo(123, "kk1")
-	//dbops.GetVideoInfo("123")
-	//dbops.DeleteVideoInfo("123")
-	//dbops.AddNewComments("1",123,"test")
-	//dbops.ListComments("1",)
-	io.WriteString(w, "ok")
+	res, _ := ioutil.ReadAll(r.Body)
+	ubody := &defs.UserCredential{}
+
+	if err := json.Unmarshal(res, ubody); err != nil {
+		sendErrorResponse(w, defs.ErrorRequestBodyParseFailed)
+		return
+	}
+
+	if err := dbops.AddUserCredential(ubody.Username, ubody.Pwd); err != nil {
+		sendErrorResponse(w, defsErrorDBError)
+		return
+	}
+
+	id := session.GenerateNewSessionId(ubody.Username)
+	su := &defs.SignedUp{Success: true, SessionId: id}
+
+	if resp, err := json.Marshal(su); err != nil {
+		sendErrorResponse(w, defs.ErrorInternalFaults)
+		return
+	} else {
+		sendNormalResponse(w, string(resp), 201)
+	}
 }
 
 func Login(w http.ResponseWriter, r *http.Request, p httprouter.Params) {

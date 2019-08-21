@@ -9,6 +9,12 @@ import (
 	"video/api/utils"
 )
 
+/*
+下面三个函数分别是：
+	添加用户
+	获取用户信息
+	删除用户
+*/
 func AddUserCredential(loginName string, pwd string) error {
 	// 千万不要用+号来连接query的各个部分, 不安全, 容易被撞库攻击
 	//Prepare预编译, 更安全了, 会拦下撞库攻击
@@ -58,6 +64,12 @@ func DeleteUser(loginName string, pwd string) error {
 	return nil
 }
 
+/*
+下面三个函数分别是：
+	添加视频
+	获取视频
+	删除视频
+*/
 func AddVideoInfo(aid int, name string) (*defs.VideoInfo, error) {
 	//Create uuid
 	vid, err := utils.NewUUID()
@@ -117,6 +129,12 @@ func DeleteVideoInfo(vid string) error {
 	return nil
 }
 
+/*
+下面两个函数分别是：
+	添加评论
+	查看评论
+	此处不添加删除评论
+*/
 func AddComments(vid string, aid int, content string) error {
 	id, err := utils.NewUUID()
 	if err != nil {
@@ -137,11 +155,12 @@ func AddComments(vid string, aid int, content string) error {
 }
 
 func ListComments(vid string, from, to int) ([]*defs.Comment, error) {
-	// 怎么测试
+	// 连接user和comments表查询字段
 	stmtOut, err := dbConn.Prepare(`SELECT comments.id, users.Login_name, comments.content FROM comments
 		INNER JOIN users ON comments.author_id=users.id
 		WHERE comments.video_id=? AND comments.time > FROM_UNIXTIME(?) AND comments.time <= FROM_UNIXTIME(?)`)
 
+	//此处定义了Comment，放在了apidef.go文件中
 	var res []*defs.Comment
 
 	rows, err := stmtOut.Query(vid, from, to)
