@@ -3,8 +3,6 @@ package handlers
 import (
 	"encoding/json"
 	"io"
-
-	//"io"
 	"net/http"
 	"video/api/defs"
 )
@@ -12,6 +10,7 @@ import (
 func sendErrorResponse(w http.ResponseWriter, errResp defs.ErrResponse) {
 	w.WriteHeader(errResp.HttpSC)
 
+	//Marshal:struct序列化成json
 	resStr, _ := json.Marshal(&errResp.Error)
 	io.WriteString(w, string(resStr))
 }

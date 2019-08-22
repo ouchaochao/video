@@ -1,3 +1,6 @@
+/*
+和session相关的db操作单独放在这个文件中
+ */
 package dbops
 
 import (
@@ -8,7 +11,14 @@ import (
 	"video/api/defs"
 )
 
-func IndrtySession(sid string, ttl int64, uname string) error {
+//往DB中插入session
+func InsertSession(sid string, ttl int64, uname string) error {
+	/*
+	strconv是golang用来做数据类型转换的一个库
+	FormatInt 将十进制的Int类型转换为String类型
+	ParseInt 将字符串转换为值
+	最常见的数值转换是 Atoi(string to int)和 Itoa(int to string)
+	*/
 	ttlstr := strconv.FormatInt(ttl, 10)
 	stmtIns, err := dbConn.Prepare("INSERT INTO sessions (session_id, TTL, login_name) VALUES (?, ?, ?)")
 	if err != nil {
@@ -48,6 +58,7 @@ func RetrieveSession(sid string) (*defs.SimpleSession, error) {
 	return ss, nil
 }
 
+//sessions放在map里,一块返回
 func RetrieveAllSessions() (*sync.Map, error) {
 	m := &sync.Map{}
 	stmtOut, err := dbConn.Prepare("SELECT * FROM sessions")
