@@ -19,7 +19,7 @@ api
 │   └── response.go # 返回处理后的信息
 ├── main.go # 主函数入口
 ├── session 
-│   └── ops.go # 产生session、验证session失效、删除session
+│   └── ops.go # 产生session、验证session、删除session
 └── utils
     └── uuid.go # 产生通用唯一识别码
 
