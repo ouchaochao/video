@@ -40,6 +40,6 @@ func CreateUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 }
 
 func Login(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	uname := p.ByName("username")
+	uname := p.ByName("user_name")
 	io.WriteString(w, uname)
 }

@@ -13,6 +13,7 @@ import (
 var HEADER_FIELD_SESSION = "X-Session-Id"
 var HEADER_FAILD_UNAME = "X-User-Name"
 
+//检测用户session是否合法，是就返回username
 func ValidateUserSession(r *http.Request) bool {
 	//get获取sessionId
 	sid := r.Header.Get(HEADER_FIELD_SESSION)

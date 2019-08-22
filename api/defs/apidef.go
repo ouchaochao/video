@@ -2,7 +2,7 @@ package defs
 
 //requests
 type UserCredential struct {
-	Username string `json:"username"`
+	Username string `json:"user_name"`
 	Pwd      string `json:"pwd"`
 }
 

@@ -22,6 +22,7 @@ func LoadSessionsFromDB() {
 		//不对外返回东西
 		return
 	}
+
 	//返回值
 	r.Range(func(k, v interface{}) bool {
 		ss := v.(*defs.SimpleSession)
