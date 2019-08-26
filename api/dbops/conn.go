@@ -2,6 +2,7 @@ package dbops
 
 import (
 	"database/sql"
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -17,4 +18,5 @@ func init()  {
 		// 无法连接时抛出异常
 		panic(err.Error())
 	}
+	fmt.Printf("dbConn +%v\n", dbConn)
 }

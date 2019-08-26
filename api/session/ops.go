@@ -16,11 +16,11 @@ func init() {
 }
 
 //从数据库读取sessionId到cache
-func LoadSessionsFromDB() {
+func LoadSessionsFromDB() *sync.Map {
 	r, err := dbops.RetrieveAllSessions()
 	if err != nil {
 		//不对外返回东西
-		return
+		return nil
 	}
 
 	//返回值
@@ -29,13 +29,14 @@ func LoadSessionsFromDB() {
 		sessionMap.Store(k, ss)
 		return true
 	})
+	return sessionMap
 }
-
 
 func nowInMilli() int64 {
-	//UnixNano纳秒级别, '/ 100000'后变成毫秒级别
-	return time.Now().UnixNano() / 100000
+	//UnixNano纳秒级别, '/ 1000000'后变成毫秒级别
+	return time.Now().UnixNano() / 1000000
 }
+
 //产生sessionId
 func GenerateNewSessionId(un string) string {
 	id, _ := utils.NewUUID()
@@ -63,6 +64,7 @@ func IsSessionExpired(sid string) (string, bool) {
 	}
 	return "", true
 }
+
 //删除过期的session
 func deleteExpieredSession(sid string) {
 	sessionMap.Delete(sid)

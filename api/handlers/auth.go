@@ -1,6 +1,6 @@
 /*
 文件初始化
- */
+*/
 package handlers
 
 import (
